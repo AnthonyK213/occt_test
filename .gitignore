@@ -1,0 +1,18 @@
+.cache
+main
+
+# CMake
+.cmake
+CMakeCache.txt
+CMakeFiles
+CMakeLists.txt.user
+CMakeScripts
+CTestTestfile.cmake
+Makefile
+Testing
+_deps
+build/
+cmake_install.cmake
+compile_commands.json
+install_manifest.txt
+OcctTestConfig.h
