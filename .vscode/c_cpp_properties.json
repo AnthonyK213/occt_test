@@ -3,14 +3,15 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "/usr/include/python3.9",
+                "/usr/include/opencascade"
             ],
             "defines": [],
             "compilerPath": "/usr/lib64/ccache/clang",
             "cStandard": "c17",
             "cppStandard": "c++14",
             "intelliSenseMode": "linux-clang-x64",
-            "compileCommands": "${workspaceFolder}/compile_commands.json",
             "configurationProvider": "ms-vscode.cmake-tools"
         }
     ],

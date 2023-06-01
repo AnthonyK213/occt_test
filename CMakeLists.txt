@@ -8,6 +8,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 option(DEBUG "Enable Debug" ON)
 configure_file(OcctTestConfig.h.in ${PROJECT_BINARY_DIR}/OcctTestConfig.h @ONLY)
 
-add_executable(OcctTest main.cpp)
+include_directories(OcctTest PUBLIC
+  "${PROJECT_BINARY_DIR}"
+  /usr/include/opencascade/
+  /usr/include/python3.9
+  )
 
-include_directories(/usr/include/opencascade/)
+add_executable(OcctTest main.cpp)
+add_library(PyOCCT pyocct.cpp)
