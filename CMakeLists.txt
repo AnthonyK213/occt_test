@@ -18,18 +18,23 @@ find_package(OpenCASCADE COMPONENTS Visualization REQUIRED)
 
 find_package(pybind11 REQUIRED)
 
-include_directories(OcctTest PUBLIC
-  "${PROJECT_BINARY_DIR}"
-  $ENV{CONDA_PREFIX}/include/python3.9
-  )
+if(${CONDA_PREFIX})
+  include_directories(OcctTest PUBLIC
+    "${PROJECT_BINARY_DIR}"
+    $ENV{CONDA_PREFIX}/include/python3.9
+    )
+else()
+  include_directories(OcctTest PUBLIC
+    "${PROJECT_BINARY_DIR}"
+    /usr/include/python3.9
+    )
+endif()
 
 include_directories(${OpenCASCADE_INCLUDE_DIR})
 MESSAGE("OCC-Include-Dir: ${OpenCASCADE_INCLUDE_DIR}")
 link_directories(${OpenCASCADE_LIBRARY_DIR})
 MESSAGE("OCC-Lib-Dir: ${OpenCASCADE_LIBRARY_DIR}")
 MESSAGE("OCC-Libs: ${OpenCASCADE_LIBRARIES}")
-
-#link_directories($ENV{CONDA_PREFIX}/lib/)
 
 SET(OpenCASCADE_LIBS
   TKernel
@@ -47,16 +52,11 @@ SET(OpenCASCADE_LIBS
 
 pybind11_add_module(pyRpOCCT pyocct.cpp)
 
-#SET(PyOCCT_LIBS
-  #python3.9
-  #)
-
-  #add_library(PyOCCT SHARED pyocct.cpp)
-
 add_executable(OcctTest main.cpp)
 
 target_link_libraries(
   OcctTest
+  PRIVATE
   ${OpenCASCADE_LIBS}
   )
 
