@@ -16,18 +16,22 @@ find_package(OpenCASCADE COMPONENTS ModelingData REQUIRED)
 find_package(OpenCASCADE COMPONENTS DataExchange REQUIRED)
 find_package(OpenCASCADE COMPONENTS Visualization REQUIRED)
 
+find_package(pybind11 REQUIRED)
+
 include_directories(OcctTest PUBLIC
   "${PROJECT_BINARY_DIR}"
   $ENV{CONDA_PREFIX}/include/python3.9
   )
 
 include_directories(${OpenCASCADE_INCLUDE_DIR})
-#MESSAGE("OCC-Include-Dir: ${OpenCASCADE_INCLUDE_DIR}")
+MESSAGE("OCC-Include-Dir: ${OpenCASCADE_INCLUDE_DIR}")
 link_directories(${OpenCASCADE_LIBRARY_DIR})
-#MESSAGE("OCC-Lib-Dir: ${OpenCASCADE_LIBRARY_DIR}")
-#MESSAGE("OCC-Libs: ${OpenCASCADE_LIBRARIES}")
+MESSAGE("OCC-Lib-Dir: ${OpenCASCADE_LIBRARY_DIR}")
+MESSAGE("OCC-Libs: ${OpenCASCADE_LIBRARIES}")
 
-SET(OpenCASCADE_LIBS 
+#link_directories($ENV{CONDA_PREFIX}/lib/)
+
+SET(OpenCASCADE_LIBS
   TKernel
   TKService
   TKV3d
@@ -39,22 +43,25 @@ SET(OpenCASCADE_LIBS
   TKG2d
   TKTopAlgo
   TKPrim
-)
+  )
 
-#if(UNIX AND NOT APPLE)
-  #find_library(FreeType REQUIRED)
+pybind11_add_module(pyRpOCCT pyocct.cpp)
 
-  #find_path (FONTCONFIG_INCLUDE_DIRS "fontconfig/fontconfig.h")
-  #find_library(FontConfig REQUIRED)
-#endif()
+#SET(PyOCCT_LIBS
+  #python3.9
+  #)
 
-#target_link_libraries(OcctTest PRIVATE OpenCASCADE)
-
-#add_library(PyOCCT SHARED pyocct.cpp)
+  #add_library(PyOCCT SHARED pyocct.cpp)
 
 add_executable(OcctTest main.cpp)
 
 target_link_libraries(
   OcctTest
   ${OpenCASCADE_LIBS}
-)
+  )
+
+target_link_libraries(
+  pyRpOCCT
+  PRIVATE
+  ${OpenCASCADE_LIBS}
+  )
