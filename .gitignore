@@ -1,6 +1,7 @@
 .cache
 main
 .vscode
+__pycache__
 
 # CMake
 .cmake

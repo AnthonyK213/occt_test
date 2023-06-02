@@ -17,18 +17,14 @@ find_package(OpenCASCADE COMPONENTS DataExchange REQUIRED)
 find_package(OpenCASCADE COMPONENTS Visualization REQUIRED)
 
 find_package(pybind11 REQUIRED)
+find_package(Python3 COMPONENTS Interpreter Development)
 
-if(${CONDA_PREFIX})
-  include_directories(OcctTest PUBLIC
-    "${PROJECT_BINARY_DIR}"
-    $ENV{CONDA_PREFIX}/include/python3.9
-    )
-else()
-  include_directories(OcctTest PUBLIC
-    "${PROJECT_BINARY_DIR}"
-    /usr/include/python3.9
-    )
-endif()
+include_directories(OcctTest PUBLIC
+  "${PROJECT_BINARY_DIR}"
+  "${Python3_INCLUDE_DIRS}"
+  )
+
+MESSAGE("Python3-Include-Dirs: ${Python3_INCLUDE_DIRS}")
 
 include_directories(${OpenCASCADE_INCLUDE_DIR})
 MESSAGE("OCC-Include-Dir: ${OpenCASCADE_INCLUDE_DIR}")
@@ -58,6 +54,7 @@ target_link_libraries(
   OcctTest
   PRIVATE
   ${OpenCASCADE_LIBS}
+  python3.9
   )
 
 target_link_libraries(
