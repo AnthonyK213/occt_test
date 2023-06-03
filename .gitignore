@@ -10,7 +10,6 @@ CMakeFiles
 CMakeLists.txt.user
 CMakeScripts
 CTestTestfile.cmake
-Makefile
 Testing
 _deps
 build/
