@@ -32,20 +32,6 @@ link_directories(${OpenCASCADE_LIBRARY_DIR})
 MESSAGE("OCC-Lib-Dir: ${OpenCASCADE_LIBRARY_DIR}")
 MESSAGE("OCC-Libs: ${OpenCASCADE_LIBRARIES}")
 
-SET(OpenCASCADE_LIBS
-  TKernel
-  TKService
-  TKV3d
-  TKOpenGl
-  TKBRep
-  TKGeomBase
-  TKGeomAlgo
-  TKG3d
-  TKG2d
-  TKTopAlgo
-  TKPrim
-  )
-
 pybind11_add_module(pyRpOCCT pyocct.cpp)
 
 add_executable(OcctTest main.cpp)
@@ -53,12 +39,12 @@ add_executable(OcctTest main.cpp)
 target_link_libraries(
   OcctTest
   PRIVATE
-  ${OpenCASCADE_LIBS}
+  ${OpenCASCADE_LIBRARIES}
   python3.9
   )
 
 target_link_libraries(
   pyRpOCCT
   PRIVATE
-  ${OpenCASCADE_LIBS}
+  ${OpenCASCADE_LIBRARIES}
   )

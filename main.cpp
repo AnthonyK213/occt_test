@@ -18,8 +18,27 @@ int main(int argc, char *argv[]) {
   f.open("a.json");
 
   const gp_Pnt pt0{0, 0, 0};
-  const gp_Pnt pt1{1, 0, 0};
+  const gp_Pnt pt1{1, 1, 0};
   const TopoDS_Edge edge0 = BRepBuilderAPI_MakeEdge(pt0, pt1).Edge();
+
+  const gp_Pnt pt2{1, 0, 0};
+  const gp_Pnt pt3{0, 1, 0};
+  const TopoDS_Edge edge1 = BRepBuilderAPI_MakeEdge(pt2, pt3).Edge();
+
+  IntTools_EdgeEdge intersection(edge0, edge1);
+  intersection.Perform();
+  
+  if (intersection.IsDone()) {
+    IntTools_SequenceOfCommonPrts commonParts = intersection.CommonParts();
+    for (auto& part : commonParts) {
+      Standard_Real t = part.VertexParameter1();
+      std::cout << t << std::endl;
+      Standard_Real u0, u1;
+      auto curve = BRep_Tool::Curve(edge0, u0, u1);
+      gp_Pnt pt = curve->Value(t);
+      pt.DumpJson(std::cout);
+    }
+  }
 
   edge0.DumpJson(f);
 
