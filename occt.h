@@ -23,3 +23,9 @@
 #include <gp_Pln.hxx>
 #include <gp_Pnt.hxx>
 #include <IntTools_EdgeEdge.hxx>
+#include <STEPControl_Reader.hxx>
+#include <IFSelect_ReturnStatus.hxx>
+#include <IFSelect_PrintCount.hxx>
+#include <Interface_Static.hxx>
+#include <TColStd_HSequenceOfTransient.hxx>
+#include <TopExp_Explorer.hxx>
